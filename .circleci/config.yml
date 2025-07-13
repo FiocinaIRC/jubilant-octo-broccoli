@@ -28,15 +28,15 @@ jobs:
       - run:
           name: Wait and check for container health
           command: |
-            for i in $(seq 1 5); do
+            for i in $(seq 1 70); do
               if ! docker ps --filter "name=mirror-leech-bot" --format '{{.Names}}' | grep -q mirror-leech-bot; then
                 echo "Container exited; failing job."
                 exit 1
               fi
               echo "$(date): Build is still building..."
-              sleep 1800
+              sleep 540
             done
-            sleep 1700
+            sleep 500
             echo "$(date): Building finished!"
 
 workflows:
