@@ -36,7 +36,6 @@ jobs:
               echo "$(date): Build is still building..."
               sleep 540
             done
-            sleep 100
             echo "$(date): Building finished!"
 
 workflows:
