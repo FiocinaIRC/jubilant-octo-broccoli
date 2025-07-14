@@ -49,4 +49,3 @@ workflows:
               only: main
     jobs:
       - build-and-push
-            cancel-in-progress: false
