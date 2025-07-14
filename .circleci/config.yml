@@ -48,8 +48,5 @@ workflows:
             branches:
               only: main
     jobs:
-      - build-and-push:
-          context: default
-          concurrency:
-            group: "build-and-push-queue"
+      - build-and-push
             cancel-in-progress: false
