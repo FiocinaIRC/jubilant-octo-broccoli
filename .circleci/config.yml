@@ -5,9 +5,6 @@ jobs:
     docker:
       - image: cimg/base:current-24.04
     resource_class: small
-    concurrency:
-      group: "build-and-push-queue"
-      cancel-in-progress: false
 
     steps:
       - checkout
@@ -44,12 +41,14 @@ jobs:
 workflows:
   version: 2
   build-workflow:
-    triggers:
-      - schedule:
-        cron: "0 */5 * * *"
-        filters:
-          branches:
-            only: main
     jobs:
       - build-and-push
-
+    concurrency:
+      group: "build-and-push-queue"
+      cancel-in-progress: false
+    triggers:
+      - schedule:
+          schedule: "0 */5 * * *"
+          filters:
+            branches:
+              only: main
