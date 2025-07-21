@@ -22,7 +22,7 @@ class TgClient:
         if Config.NOTIFY_ON_START:
             for user_id in Config.SUDO_USERS:
                 try:
-                    await cls.bot.send_message(user_id, text)
+                    await cls.bot.send_message(int(user_id), text)
                 except Exception as e:
                     LOGGER.warning(f"Failed to notify {user_id}: {e}")
 

@@ -5,7 +5,6 @@ import asyncio, signal
 
 Config.load()
 
-
 async def main():
     from asyncio import gather
     from .core.startup import (
