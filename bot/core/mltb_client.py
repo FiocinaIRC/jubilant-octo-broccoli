@@ -19,9 +19,9 @@ class TgClient:
 
     @classmethod
     async def notify_sudo_users(cls, text: str):
-        LOGGER.info(f"SUDO_USER_IDS: {Config.SUDO_USERS}")
         if Config.NOTIFY_ON_START:
-            for user_id in Config.SUDO_USERS:
+            sudo_users = [int(uid) for uid in Config.SUDO_USERS.strip().split() if uid.strip()]
+            for user_id in sudo_users:
                 try:
                     await cls.bot.send_message(int(user_id), text)
                 except Exception as e:
