@@ -1,6 +1,7 @@
 from . import LOGGER, bot_loop
 from .core.mltb_client import TgClient
 from .core.config_manager import Config
+import asyncio, signal
 
 Config.load()
 
@@ -51,6 +52,11 @@ async def main():
         rclone_serve_booter(),
     )
 
+def setup_signal_handlers(loop):
+    for sig in (signal.SIGINT, signal.SIGTERM):
+        loop.add_signal_handler(sig, lambda: asyncio.create_task(TgClient.stop()))
+
+setup_signal_handlers(bot_loop)
 
 bot_loop.run_until_complete(main())
 

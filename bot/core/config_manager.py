@@ -29,6 +29,7 @@ class Config:
     HYDRA_IP = ""
     HYDRA_API_KEY = ""
     NAME_SUBSTITUTE = ""
+    NOTIFY_ON_START = True
     OWNER_ID = 0
     QUEUE_ALL = 0
     QUEUE_DOWNLOAD = 0

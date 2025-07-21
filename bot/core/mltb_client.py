@@ -5,6 +5,9 @@ from .. import LOGGER
 from .config_manager import Config
 
 
+
+
+
 class TgClient:
     _lock = Lock()
     bot = None
@@ -13,6 +16,15 @@ class TgClient:
     ID = 0
     IS_PREMIUM_USER = False
     MAX_SPLIT_SIZE = 2097152000
+
+    @classmethod
+    async def notify_sudo_users(cls, text: str):
+        if Config.NOTIFY_ON_START:
+            for user_id in Config.SUDO_USERS:
+                try:
+                    await cls.bot.send_message(user_id, text)
+                except Exception as e:
+                    LOGGER.warning(f"Failed to notify {user_id}: {e}")
 
     @classmethod
     async def start_bot(cls):
@@ -30,6 +42,7 @@ class TgClient:
         )
         await cls.bot.start()
         cls.NAME = cls.bot.me.username
+        await cls.notify_sudo_users("✅ Bot started successfully.")
 
     @classmethod
     async def start_user(cls):
@@ -58,6 +71,7 @@ class TgClient:
     @classmethod
     async def stop(cls):
         async with cls._lock:
+            await cls.notify_sudo_users("⚠️ Bot is manually stopping.")
             if cls.bot:
                 await cls.bot.stop()
             if cls.user:
